@@ -6,6 +6,8 @@ This repo contains the code to run a random password generator meeting a specifi
 ## Usage
 Live link below:
 
+![app screenshot](./Assets/Screenshot%202023-01-27%20at%2010.26.50%20PM.png)
+![app screenshot](./Assets/Screenshot%202023-01-27%20at%2010.27.00%20PM.png)
 
 
 ### Resources
