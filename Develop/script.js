@@ -1,19 +1,19 @@
 // variables
-var upLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+let upLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
-var lowLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+let lowLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+let numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-var specials = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "-", ".", "`", "~", "|", "<", ">", "=", "-", "_"]
+let specials = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "+", "-", ".", "`", "~", "|", "<", ">", "=", "-", "_"]
 
-let allChars = upLetters.concat(lowLetters, numbers, specials);
+// let allChars = upLetters.concat(lowLetters, numbers, specials);
 
 // querySelectors
 let generateBtn = document.querySelector("#generate");
 
 // Logic
-            //password options 
+            //PASSWORD OPTIONS 
 function passwordOptions() {
     let passwordLength = parseInt(prompt("How many characters would you like your password to contain? 8-128"));
 
@@ -59,66 +59,45 @@ function passwordOptions() {
 
 function generatePassword() {
     let userOptions = passwordOptions();
-    // let allChars = upLetters.concat(downLetters, numbers, specials);
+    let possibleChars= [];
+    let guarCharacters = [];  //guaranteed
+    let remainingCharacters = [];
+                          
+    if(userOptions.hasNumber===true) {
+      possibleChars=possibleChars.concat(numbers);
+      guarCharacters.push(numbers[Math.floor(Math.random() * numbers.length)]);
+    }
+    if(userOptions.hasUpper===true) {
+      possibleChars=possibleChars.concat(upLetters);
+      guarCharacters.push(upLetters[Math.floor(Math.random() * upLetters.length)]);
+    }
+    if(userOptions.hasLower===true) {
+      possibleChars=possibleChars.concat(lowLetters);
+      guarCharacters.push(lowLetters[Math.floor(Math.random() * lowLetters.length)]);
+    }
+    if(userOptions.hasSpecial===true) {
+      possibleChars=possibleChars.concat(specials);
+      guarCharacters.push(specials[Math.floor(Math.random() * specials.length)]);
+    }
+    // console.log(guaranteedChars);
+    // console.log(possibleChars);
 
-    // let userLow=lowLetters[Math.floor(Math.random() * lowLetters.length)];
-
-    // let userUp=upLetters[Math.floor(Math.random() * upLetters.length)];
-
-    // let userNum=numbers[Math.floor(Math.random() * numbers.length)];
-
-    // let userSpecial=specials[Math.floor(Math.random() * specials.length)];
-
-
-
-//    if(useLowers===true && useUppers===true &&useNumbers===true){
-//     }  else if(useLowers===true && useUppers===true &&useSpecials===true)
-//     }  else if(useLowers===true && useNumbers===true &&useSpecials===true)
-//     }  else if(useUppers===true && useNumbers===true &&useSpecials===true)
-
-let passwordStore="";
-       for (let index = 0; index < userOptions.length; index++) {
-      console.log(index) ;
-        if(index===0){
-          if(userOptions.hasLower===true){
-            let userLow=lowLetters[Math.floor(Math.random() * lowLetters.length)];
-         passwordStore=passwordStore + userLow;
-          }
+    let guarLength=guarCharacters.length;
+                                    //user options minus password length
+        for (let index = 0; index < (userOptions.length-guarLength); index++) { 
+          remainingCharacters.push(possibleChars[Math.floor(Math.random() * possibleChars.length)]);
         }
-       else if(index===1){
-            if(userOptions.hasUpper===true){
-              let userUp=upLetters[Math.floor(Math.random() * upLetters.length)];
-           passwordStore=passwordStore + userUp;
-            }
-          }
-        else if(index===2){
-            if(userOptions.hasNumber===true){
-              let useNumbers=numbers[Math.floor(Math.random() * numbers.length)];
-           passwordStore=passwordStore + useNumbers;
-            }
-          }
-        else if(index===3){
-            if(userOptions.hasSpecial===true){
-              let useSpecials=specials[Math.floor(Math.random() * specials.length)];
-           passwordStore=passwordStore + useSpecials;
-            }
-          }
-          else{let useAllChars=allChars[Math.floor(Math.random() * allChars.length)];
-            passwordStore=passwordStore + useAllChars;
-             }
-          
-          }
-
-       
-       console.log(passwordStore);
+        let almostPass = guarCharacters.concat(remainingCharacters);
+        let finalFinalPass=almostPass.join("");
         
-   }
+        // console.log(finalFinalPass);
 
-    //lost from here
+        return finalFinalPass;
 
-    // return password.join("")
-// }
-generatePassword();
+  }
+
+
+// generatePassword();
 
 
                         //WRITE PASSWORD
@@ -127,7 +106,8 @@ function writePassword() {
 
     let password = generatePassword();
     let passwordText = document.querySelector("#password");
-    passwordText.value = password;
+    passwordText.innerHTML = password;
+    //why didn't .value work?
 
 }
 
